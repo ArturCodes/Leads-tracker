@@ -1,6 +1,6 @@
 {
   "name": "leads-tracker",
-  "private": true,
+  "private": false,
   "type": "module",
   "scripts": {
     "build": "react-router build",
