@@ -1,0 +1,28 @@
+.wrap {
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: left;
+}
+
+thead th {
+  color: rgba(255,255,255,0.75);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
