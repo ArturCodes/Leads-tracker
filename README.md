@@ -1,87 +1,77 @@
-# Welcome to React Router!
+# Leads Tracker (React + React Router + Vite)
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A lightweight lead management app (mini-CRM) built to demonstrate professional React fundamentals: routing, controlled forms, shared state, and persistence.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## What the app does
 
-## Features
+- Create a lead (name, email, status)
+- View all leads
+- View lead details
+- Edit existing leads
+- Delete leads
+- Persist leads in the browser using `localStorage`
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Tech stack
 
-## Getting Started
+- React
+- React Router (route config + file-based routes)
+- Vite
+- TypeScript
+- SCSS Modules
 
-### Installation
-
-Install the dependencies:
+## How to run locally
 
 ```bash
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Open:
 
-## Building for Production
+- `http://localhost:5173`
 
-Create a production build:
+## Project structure (high level)
 
-```bash
-npm run build
-```
+- `app/routes.ts` — URL → route file mapping
+- `app/root.tsx` — app shell; renders `<Outlet />`; wraps the app in `<LeadsProvider>`
+- `app/routes/**` — route pages (screens)
+- `app/features/leads/**` — leads domain (store, types, feature components)
+- `app/components/**` — reusable UI components (generic)
+- `app/assets/**` — bundled images/icons
+- `app/app.css` and `*.module.scss` — global + scoped styles
 
-## Deployment
+## Key implementation decisions
 
-### Docker Deployment
+### Shared state via Context + Reducer
 
-To build and run using Docker:
+Leads data lives in a single store (`app/features/leads/store.tsx`) using `useReducer` for predictable updates:
 
-```bash
-docker build -t my-app .
+- `ADD`
+- `UPDATE`
+- `REMOVE`
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+All route pages consume the store through the `useLeads()` hook.
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### Persistence
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+Leads are loaded on startup and saved on change using:
 
-### DIY Deployment
+- `useReducer(..., undefined, loadInitialState)` for one-time initialization
+- `useEffect` to sync updates to `localStorage`
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+## What this project demonstrates (interview highlights)
 
-Make sure to deploy the output of `npm run build`
+- Controlled inputs (`useState`) and form submission
+- Lifting state and prop-driven forms (`onSubmit`, `initialValue`)
+- Shared state management (Context + `useReducer`)
+- Routing patterns, including dynamic routes (`/leads/:id`)
+- Side effects and persistence (`useEffect`, `localStorage`)
+- Clean project organization (routes vs features)
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+## Next improvements (roadmap)
 
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+- Form validation + inline field errors
+- Better UX (empty states, confirmation dialogs, toast notifications)
+- Sorting/filtering leads by status
+- Replace `localStorage` with an API (same UI; different data layer)
+- Add tests (unit tests for reducer; integration tests for routes)

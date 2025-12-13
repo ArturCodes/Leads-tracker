@@ -15,6 +15,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <Meta />
         <Links />
       </head>
+
       <body>
         <LeadsProvider>{children}</LeadsProvider>
         <ScrollRestoration />
